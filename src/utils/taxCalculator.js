@@ -17,7 +17,7 @@ export const parseIndianNumber = (str) => {
 export const calculateTax = (taxableIncome, regime = 'new') => {
   let tax = 0;
   let cess = 0;
-  
+
   // Standard Deduction
   const standardDeduction = regime === 'new' ? 75000 : 50000;
   const netTaxableIncome = Math.max(0, taxableIncome - standardDeduction);
@@ -31,11 +31,11 @@ export const calculateTax = (taxableIncome, regime = 'new') => {
     // 16-20L: 20%
     // 20-24L: 25%
     // >24L: 30%
-    
+
     // Rebate u/s 87A: Tax is 0 if income <= 12L (after std deduction? No, usually on taxable income)
     // Actually, rebate is up to 60k. 
     // Let's calculate tax first.
-    
+
     const slabs = [
       { limit: 400000, rate: 0 },
       { limit: 800000, rate: 0.05 },
@@ -58,7 +58,7 @@ export const calculateTax = (taxableIncome, regime = 'new') => {
       // Income 4L-8L: 5%
       // etc.
     }
-    
+
     // Re-implementing slab logic correctly
     if (netTaxableIncome > 2400000) {
       tax += (netTaxableIncome - 2400000) * 0.30;
@@ -98,7 +98,7 @@ export const calculateTax = (taxableIncome, regime = 'new') => {
     // But wait, standard deduction is 75k.
     // So if Gross is 12.75L -> Net is 12L -> Tax 60k -> Rebate 60k -> Tax 0.
     // If Net Taxable Income <= 12,00,000, Tax is 0.
-    
+
     if (netTaxableIncome <= 1200000) {
       tax = 0;
     }
@@ -109,7 +109,7 @@ export const calculateTax = (taxableIncome, regime = 'new') => {
     // 2.5-5L: 5%
     // 5-10L: 20%
     // >10L: 30%
-    
+
     if (netTaxableIncome > 1000000) {
       tax += (netTaxableIncome - 1000000) * 0.30;
       tax += 500000 * 0.20; // 5-10L
@@ -120,7 +120,7 @@ export const calculateTax = (taxableIncome, regime = 'new') => {
     } else if (netTaxableIncome > 250000) {
       tax += (netTaxableIncome - 250000) * 0.05;
     }
-    
+
     // Rebate u/s 87A
     // If taxable income <= 5,00,000, rebate up to 12,500
     if (netTaxableIncome <= 500000) {

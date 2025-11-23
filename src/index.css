@@ -519,6 +519,67 @@ body {
   }
 }
 
+
+
+/* Tooltip Styles */
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  width: max-content;
+  max-width: 220px;
+  text-align: center;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  line-height: 1.4;
+  backdrop-filter: blur(4px);
+}
+
+.tooltip-arrow {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
+}
+
+/* Mobile Tooltip Overrides */
+@media (max-width: 768px) {
+  .tooltip-content {
+    width: 200px;
+    left: -10px;
+    /* Align left near the icon */
+    transform: none;
+    text-align: left;
+    white-space: normal;
+    /* Position below the icon to avoid top cropping */
+    bottom: auto;
+    top: 100%;
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+
+  .tooltip-arrow {
+    left: 19px;
+    /* Point to the icon */
+    transform: translateX(-50%);
+    /* Flip arrow to point up */
+    top: auto;
+    bottom: 100%;
+    border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
+  }
+}
+
 /* Smooth Animations */
 @keyframes fadeIn {
   from {

@@ -344,9 +344,35 @@ function App() {
         padding: '1rem',
         color: 'var(--text-secondary)',
         fontSize: '0.9rem',
-        fontWeight: '500'
+        fontWeight: '500',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '0.5rem',
+        alignItems: 'center'
       }}>
-        Built with <span style={{ color: '#FF3B30' }}>❤️</span> by Rohan Mayeker
+        <div>
+          Built with <span style={{ color: '#FF3B30' }}>❤️</span> by Rohan Mayeker
+        </div>
+        <a
+          href="https://www.linkedin.com/in/rohanmayekar/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: 'var(--primary-color)',
+            textDecoration: 'none',
+            fontWeight: '600',
+            fontSize: '0.85rem',
+            opacity: 0.9,
+            transition: 'opacity 0.2s'
+          }}
+          onMouseOver={(e) => e.target.style.opacity = 1}
+          onMouseOut={(e) => e.target.style.opacity = 0.9}
+        >
+          Connect on LinkedIn ↗
+        </a>
+        <div style={{ fontSize: '0.75rem', opacity: 0.7, marginTop: '0.5rem' }}>
+          Last updated: November 2025
+        </div>
       </footer>
     </div>
   );
