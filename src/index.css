@@ -291,8 +291,231 @@ body {
   }
 
   .glass-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
     border-radius: 16px;
+  }
+
+  /* Mobile Typography */
+  h1 {
+    font-size: 1.75rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+
+  /* Modal Mobile Adjustments */
+  .modal-content {
+    padding: 1rem;
+    max-height: 80vh;
+    width: 95% !important;
+    /* Force width to fit screen */
+    margin: 0 auto;
+  }
+
+  .modal-overlay {
+    padding: 0.5rem;
+    align-items: center;
+    /* Center on mobile too */
+  }
+
+  /* Responsive Card Tables */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    border: none;
+  }
+
+  /* Hide Table Headers */
+  .table-responsive thead {
+    display: none;
+  }
+
+  /* Turn Rows into Cards */
+  .table-responsive tbody tr {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  /* Turn Cells into Flex Columns for Vertical Stack */
+  .table-responsive tbody td {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0.75rem 0 !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    text-align: left;
+    font-size: 1.1rem !important;
+    width: 100%;
+    white-space: normal !important;
+  }
+
+  .table-responsive tbody td:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Add Labels */
+  .table-responsive tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: left;
+    margin-right: 0;
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    width: 100%;
+  }
+
+  /* Value Styling */
+  .table-responsive tbody td {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* Special handling for colSpan rows (Totals) */
+  /* Keep totals looking like a summary section */
+  .table-responsive tbody td[colspan="3"] {
+    flex-direction: row;
+    /* Keep label horizontal if possible, or just text */
+    justify-content: flex-start;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding-bottom: 0.25rem !important;
+    border-bottom: none !important;
+    font-size: 1rem !important;
+  }
+
+  /* For totals, we want the label to be the cell content itself */
+  .table-responsive tbody td[colspan="3"]::before {
+    display: none;
+  }
+
+  .table-responsive tbody td[colspan="3"]+td {
+    padding-top: 0 !important;
+    padding-bottom: 0.75rem !important;
+    font-weight: 800;
+    font-size: 1.5rem !important;
+    color: var(--primary-color);
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-bottom: none !important;
+  }
+
+  /* Hide label for total row value if it's redundant */
+  .table-responsive tbody td[colspan="3"]+td::before {
+    display: none;
+  }
+
+  /* Mobile Summary Grid */
+  .summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .summary-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
+    font-weight: 600;
+  }
+
+  .summary-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+}
+
+/* Desktop Summary Styles (Default) */
+.final-summary-container {
+  background: linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 2px solid rgba(0, 122, 255, 0.2);
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Total Row Override for Desktop */
+.summary-item.total-row {
+  align-items: center;
+}
+
+.summary-item.total-row .summary-label {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+
+  /* Reset container to be transparent on mobile */
+  .final-summary-container {
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  /* Make items look like cards */
+  .summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .summary-item.total-row {
+    border: 2px solid rgba(0, 122, 255, 0.2);
+    background: rgba(0, 122, 255, 0.05);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .summary-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .summary-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
   }
 }
 

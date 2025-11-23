@@ -327,7 +327,6 @@ function App() {
         </>
       )}
 
-      {/* Calculation Modal */}
       <CalculationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -337,6 +336,18 @@ function App() {
         viewMode={viewMode}
         homeLoanDeduction={Math.min(Math.max(0, homeLoanInterest - rentReceived), 200000)}
       />
+
+      {/* Footer */}
+      <footer style={{
+        textAlign: 'center',
+        marginTop: '3rem',
+        padding: '1rem',
+        color: 'var(--text-secondary)',
+        fontSize: '0.9rem',
+        fontWeight: '500'
+      }}>
+        Built with <span style={{ color: '#FF3B30' }}>❤️</span> by Rohan Mayeker
+      </footer>
     </div>
   );
 }

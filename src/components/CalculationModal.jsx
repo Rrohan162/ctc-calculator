@@ -86,37 +86,39 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
                         padding: '1rem',
                         border: '1px solid rgba(52, 199, 89, 0.2)'
                     }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                            <thead>
-                                <tr style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.1)' }}>
-                                    <th style={{ textAlign: 'left', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Component</th>
-                                    <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Amount</th>
-                                    <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>% of CTC</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {earnings.filter(e => !e.disabled && e.amount > 0).map((earning, idx) => (
-                                    <tr key={idx} style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)' }}>
-                                        <td style={{ padding: '0.75rem', fontSize: '1.0625rem' }}>{earning.name}</td>
-                                        <td style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
-                                            ₹ {formatIndianNumber(Math.round(earning.amount))}
+                        <div className="table-responsive">
+                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                <thead>
+                                    <tr style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.1)' }}>
+                                        <th style={{ textAlign: 'left', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Component</th>
+                                        <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Amount</th>
+                                        <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>% of CTC</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {earnings.filter(e => !e.disabled && e.amount > 0).map((earning, idx) => (
+                                        <tr key={idx} style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)' }}>
+                                            <td data-label="Component" style={{ padding: '0.75rem', fontSize: '1.0625rem' }}>{earning.name}</td>
+                                            <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
+                                                ₹ {formatIndianNumber(Math.round(earning.amount))}
+                                            </td>
+                                            <td data-label="% of CTC" style={{ padding: '0.75rem', textAlign: 'right', color: 'var(--text-secondary)' }}>
+                                                {((earning.amount / ctc) * 100).toFixed(1)}%
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    <tr style={{ fontWeight: '600', background: 'rgba(52, 199, 89, 0.1)' }}>
+                                        <td data-label="Component" style={{ padding: '0.75rem' }}>Gross Salary</td>
+                                        <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right' }}>
+                                            ₹ {formatIndianNumber(Math.round(grossSalary))}
                                         </td>
-                                        <td style={{ padding: '0.75rem', textAlign: 'right', color: 'var(--text-secondary)' }}>
-                                            {((earning.amount / ctc) * 100).toFixed(1)}%
+                                        <td data-label="% of CTC" style={{ padding: '0.75rem', textAlign: 'right' }}>
+                                            {((grossSalary / ctc) * 100).toFixed(1)}%
                                         </td>
                                     </tr>
-                                ))}
-                                <tr style={{ fontWeight: '600', background: 'rgba(52, 199, 89, 0.1)' }}>
-                                    <td style={{ padding: '0.75rem' }}>Gross Salary</td>
-                                    <td style={{ padding: '0.75rem', textAlign: 'right' }}>
-                                        ₹ {formatIndianNumber(Math.round(grossSalary))}
-                                    </td>
-                                    <td style={{ padding: '0.75rem', textAlign: 'right' }}>
-                                        {((grossSalary / ctc) * 100).toFixed(1)}%
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -136,30 +138,32 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
                         padding: '1rem',
                         border: '1px solid rgba(255, 59, 48, 0.2)'
                     }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                            <thead>
-                                <tr style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.1)' }}>
-                                    <th style={{ textAlign: 'left', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Component</th>
-                                    <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)' }}>
-                                    <td style={{ padding: '0.75rem', fontSize: '1.0625rem' }}>Standard Deduction</td>
-                                    <td style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
-                                        - ₹ {formatIndianNumber(standardDeduction)}
-                                    </td>
-                                </tr>
-                                {deductions.filter(d => !d.disabled && d.amount > 0).map((deduction, idx) => (
-                                    <tr key={idx} style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)' }}>
-                                        <td style={{ padding: '0.75rem', fontSize: '1.0625rem' }}>{deduction.name}</td>
-                                        <td style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
-                                            - ₹ {formatIndianNumber(Math.round(deduction.amount))}
+                        <div className="table-responsive">
+                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                <thead>
+                                    <tr style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.1)' }}>
+                                        <th style={{ textAlign: 'left', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Component</th>
+                                        <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '1rem' }}>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)' }}>
+                                        <td data-label="Component" style={{ padding: '0.75rem', fontSize: '1.0625rem' }}>Standard Deduction</td>
+                                        <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
+                                            - ₹ {formatIndianNumber(standardDeduction)}
                                         </td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                    {deductions.filter(d => !d.disabled && d.amount > 0).map((deduction, idx) => (
+                                        <tr key={idx} style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.05)' }}>
+                                            <td data-label="Component" style={{ padding: '0.75rem', fontSize: '1.0625rem' }}>{deduction.name}</td>
+                                            <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
+                                                - ₹ {formatIndianNumber(Math.round(deduction.amount))}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -202,92 +206,86 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
                         border: '1px solid rgba(0, 122, 255, 0.2)'
                     }}>
                         <h4 style={{ fontSize: '1rem', fontWeight: '600', marginBottom: '0.75rem' }}>Tax Slab Breakdown:</h4>
-                        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                            <thead>
-                                <tr style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.1)' }}>
-                                    <th style={{ textAlign: 'left', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Income Range</th>
-                                    <th style={{ textAlign: 'center', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Rate</th>
-                                    <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Taxable</th>
-                                    <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Tax</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {taxBreakdown.map((slab, idx) => (
-                                    <tr
-                                        key={idx}
-                                        style={{
-                                            borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
-                                            background: slab.taxableAmount > 0 ? 'rgba(0, 122, 255, 0.05)' : 'transparent'
-                                        }}
-                                    >
-                                        <td style={{ padding: '0.75rem', fontSize: '1rem' }}>{slab.range}</td>
-                                        <td style={{ padding: '0.75rem', textAlign: 'center', fontWeight: '500' }}>{slab.rate}%</td>
-                                        <td style={{ padding: '0.75rem', textAlign: 'right' }}>
-                                            {slab.taxableAmount > 0 ? `₹ ${formatIndianNumber(Math.round(slab.taxableAmount))}` : '-'}
-                                        </td>
-                                        <td style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
-                                            {slab.taxOnSlab > 0 ? `₹ ${formatIndianNumber(Math.round(slab.taxOnSlab))}` : '-'}
+                        <div className="table-responsive">
+                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                <thead>
+                                    <tr style={{ borderBottom: '2px solid rgba(0, 0, 0, 0.1)' }}>
+                                        <th style={{ textAlign: 'left', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Income Range</th>
+                                        <th style={{ textAlign: 'center', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Rate</th>
+                                        <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Taxable</th>
+                                        <th style={{ textAlign: 'right', padding: '0.75rem', fontWeight: '600', fontSize: '0.875rem' }}>Tax</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {taxBreakdown.map((slab, idx) => (
+                                        <tr
+                                            key={idx}
+                                            style={{
+                                                borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
+                                                background: slab.taxableAmount > 0 ? 'rgba(0, 122, 255, 0.05)' : 'transparent'
+                                            }}
+                                        >
+                                            <td data-label="Income Range" style={{ padding: '0.75rem', fontSize: '1rem' }}>{slab.range}</td>
+                                            <td data-label="Rate" style={{ padding: '0.75rem', textAlign: 'center', fontWeight: '500' }}>{slab.rate}%</td>
+                                            <td data-label="Taxable Amount" style={{ padding: '0.75rem', textAlign: 'right' }}>
+                                                {slab.taxableAmount > 0 ? `₹ ${formatIndianNumber(Math.round(slab.taxableAmount))}` : '-'}
+                                            </td>
+                                            <td data-label="Tax" style={{ padding: '0.75rem', textAlign: 'right', fontWeight: '500' }}>
+                                                {slab.taxOnSlab > 0 ? `₹ ${formatIndianNumber(Math.round(slab.taxOnSlab))}` : '-'}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    <tr style={{ fontWeight: '600', background: 'rgba(0, 122, 255, 0.1)', borderTop: '2px solid rgba(0, 122, 255, 0.3)' }}>
+                                        <td data-label="Total" colSpan="3" style={{ padding: '0.75rem' }}>Total Tax</td>
+                                        <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right' }}>₹ {formatIndianNumber(Math.round(tax))}</td>
+                                    </tr>
+                                    <tr style={{ fontWeight: '600', background: 'rgba(0, 122, 255, 0.1)' }}>
+                                        <td data-label="Cess" colSpan="3" style={{ padding: '0.75rem' }}>Health & Education Cess (4%)</td>
+                                        <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right' }}>₹ {formatIndianNumber(Math.round(cess))}</td>
+                                    </tr>
+                                    <tr style={{ fontWeight: '700', background: 'rgba(0, 122, 255, 0.15)', fontSize: '1.05rem' }}>
+                                        <td data-label="Final Tax" colSpan="3" style={{ padding: '0.75rem' }}>Total Income Tax</td>
+                                        <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right', color: 'var(--primary-color)' }}>
+                                            ₹ {formatIndianNumber(Math.round(totalTax))}
                                         </td>
                                     </tr>
-                                ))}
-                                <tr style={{ fontWeight: '600', background: 'rgba(0, 122, 255, 0.1)', borderTop: '2px solid rgba(0, 122, 255, 0.3)' }}>
-                                    <td colSpan="3" style={{ padding: '0.75rem' }}>Total Tax</td>
-                                    <td style={{ padding: '0.75rem', textAlign: 'right' }}>₹ {formatIndianNumber(Math.round(tax))}</td>
-                                </tr>
-                                <tr style={{ fontWeight: '600', background: 'rgba(0, 122, 255, 0.1)' }}>
-                                    <td colSpan="3" style={{ padding: '0.75rem' }}>Health & Education Cess (4%)</td>
-                                    <td style={{ padding: '0.75rem', textAlign: 'right' }}>₹ {formatIndianNumber(Math.round(cess))}</td>
-                                </tr>
-                                <tr style={{ fontWeight: '700', background: 'rgba(0, 122, 255, 0.15)', fontSize: '1.05rem' }}>
-                                    <td colSpan="3" style={{ padding: '0.75rem' }}>Total Income Tax</td>
-                                    <td style={{ padding: '0.75rem', textAlign: 'right', color: 'var(--primary-color)' }}>
-                                        ₹ {formatIndianNumber(Math.round(totalTax))}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
                 {/* Section 4: Final Summary */}
-                <div style={{
-                    background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
-                    borderRadius: '16px',
-                    padding: '1.5rem',
-                    border: '2px solid rgba(0, 122, 255, 0.2)'
-                }}>
+                <div className="final-summary-container">
                     <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
                         4. Final Summary
                     </h3>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.05rem' }}>
-                            <span style={{ fontWeight: '500' }}>Gross Salary:</span>
-                            <span style={{ fontWeight: '600' }}>₹ {formatIndianNumber(Math.round(grossSalary))}</span>
+                    <div className="summary-grid" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <div className="summary-item">
+                            <span className="summary-label">Gross Salary</span>
+                            <span className="summary-value">₹ {formatIndianNumber(Math.round(grossSalary))}</span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.05rem' }}>
-                            <span style={{ fontWeight: '500' }}>Total Deductions:</span>
-                            <span style={{ fontWeight: '600', color: 'var(--danger-color)' }}>
+                        <div className="summary-item">
+                            <span className="summary-label">Total Deductions</span>
+                            <span className="summary-value" style={{ color: 'var(--danger-color)' }}>
                                 - ₹ {formatIndianNumber(Math.round(totalDeductions))}
                             </span>
                         </div>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
+                        <div className="summary-item total-row" style={{
                             paddingTop: '0.75rem',
                             borderTop: '2px solid rgba(0, 122, 255, 0.3)',
-                            fontSize: '1.25rem',
-                            fontWeight: '700'
+                            marginTop: '0.5rem'
                         }}>
-                            <span>Net Take-Home Pay:</span>
-                            <span style={{ color: 'var(--success-color)' }}>
+                            <span className="summary-label" style={{ fontSize: '1.1rem', color: 'var(--text-primary)' }}>Net Take-Home Pay</span>
+                            <span className="summary-value" style={{ color: 'var(--success-color)', fontSize: '1.75rem', fontWeight: '800' }}>
                                 ₹ {formatIndianNumber(Math.round(netPay))}
                             </span>
                         </div>
                         <div style={{
-                            marginTop: '0.5rem',
+                            marginTop: '0.25rem',
                             fontSize: '0.875rem',
                             color: 'var(--text-secondary)',
-                            textAlign: 'center'
+                            textAlign: 'left'
                         }}>
                             ({viewMode === 'monthly' ? `₹ ${formatIndianNumber(Math.round(netPay / 12))}/month` : 'Annual'})
                         </div>
