@@ -35,7 +35,7 @@ git branch -M main
 
 # Link to your GitHub repository
 # REPLACE <YOUR_REPO_URL> with the URL from the GitHub page (e.g., https://github.com/username/ctc-calculator.git)
-git remote add origin <YOUR_REPO_URL>
+git remote add origin https://github.com/Rrohan162/ctc-calculator.git
 
 # Push your code
 git push -u origin main
