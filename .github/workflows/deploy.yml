@@ -1,9 +1,8 @@
-name: Deploy Vite site to GitHub Pages
+name: Deploy Vite to GitHub Pages
 
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -29,13 +28,10 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist   # Vite output folder
+          path: ./dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-
-# force trigger #test
+      - uses: actions/deploy-pages@v4
