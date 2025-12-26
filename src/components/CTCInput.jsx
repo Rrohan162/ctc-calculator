@@ -24,7 +24,7 @@ const CTCInput = ({ value, onChange }) => {
                     textTransform: 'uppercase',
                     letterSpacing: '1px'
                 }}>
-                    Annual CTC
+                    Gross CTC
                 </label>
                 <div style={{ position: 'relative', maxWidth: '500px', margin: '0 auto' }}>
                     <span style={{

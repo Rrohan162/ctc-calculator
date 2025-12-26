@@ -2,7 +2,7 @@ import React from 'react';
 import { formatIndianNumber, parseIndianNumber } from '../utils/taxCalculator';
 import Tooltip from './Tooltip';
 
-const EarningsCard = ({ earnings, grossSalary, ctc, onUpdate, viewMode }) => {
+const EarningsCard = ({ earnings, grossSalary, ctc, onUpdate, viewMode, performanceBonus }) => {
 
     const handleChange = (id, field, val) => {
         const updated = earnings.map(e => {
@@ -48,7 +48,7 @@ const EarningsCard = ({ earnings, grossSalary, ctc, onUpdate, viewMode }) => {
         <div className="glass-card">
             <div className="flex-row" style={{ marginBottom: '1.5rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '1rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <h3 style={{ margin: 0, color: 'var(--success-color)' }}>Earnings</h3>
+                    <h3 style={{ margin: 0, color: 'var(--success-color)' }}>Net Salary (yearly)</h3>
                     <Tooltip text="Breakdown of your salary components." />
                 </div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '0.25rem', fontStyle: 'italic' }}>
@@ -122,6 +122,7 @@ const EarningsCard = ({ earnings, grossSalary, ctc, onUpdate, viewMode }) => {
                 })}
 
                 {/* Add New Button Row */}
+                {/* Add New Button Row */}
                 <button
                     onClick={handleAdd}
                     style={{
@@ -142,8 +143,30 @@ const EarningsCard = ({ earnings, grossSalary, ctc, onUpdate, viewMode }) => {
                 </button>
             </div>
 
-            <div className="flex-row" style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', fontWeight: 'bold', fontSize: '1.1rem' }}>
-                <span>Gross Salary</span>
+            {/* Performance Bonus Display (Separate Row) */}
+            {performanceBonus > 0 && (
+                <div style={{ marginTop: '0.75rem', marginBottom: '0.75rem' }}>
+                    <div className="flex-row" style={{ background: 'rgba(255, 215, 0, 0.05)', padding: '0.75rem', borderRadius: '8px', border: '1px dashed rgba(255, 215, 0, 0.3)' }}>
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ fontSize: '0.95rem', color: 'var(--text-primary)', fontWeight: '500' }}>Performance Bonus</span>
+                            <Tooltip text="Variable pay/incentive. Displayed separately as requested." />
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px' }}>
+                                {ctc > 0 ? ((performanceBonus / ctc) * 100).toFixed(1) : '0.0'}%
+                            </span>
+                            <span style={{ color: 'var(--success-color)', fontWeight: 'bold' }}>+</span>
+                            <span style={{ width: '100px', textAlign: 'right', padding: '0.25rem', fontSize: '0.95rem', fontWeight: '500' }}>
+                                ₹ {formatIndianNumber(viewMode === 'monthly' ? Math.round(performanceBonus / 12) : Math.round(performanceBonus))}
+                            </span>
+                            <span style={{ width: '24px' }}></span>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="flex-row" style={{ marginTop: '0.75rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                <span>Gross Salary <span style={{ fontSize: '0.8rem', fontWeight: 'normal', color: 'var(--text-secondary)' }}>(Fixed)</span></span>
                 <span>₹ {formatIndianNumber(Math.round(viewMode === 'monthly' ? grossSalary / 12 : grossSalary))}</span>
             </div>
         </div>

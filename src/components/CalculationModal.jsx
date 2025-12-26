@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatIndianNumber } from '../utils/taxCalculator';
 
-const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc, viewMode, homeLoanDeduction }) => {
+const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc, viewMode, homeLoanDeduction, performanceBonus = 0 }) => {
     if (!isOpen || !salaryDetails || !taxCalculation) return null;
 
     const { grossSalary, earnings, deductions, employerPF } = salaryDetails;
@@ -44,8 +44,19 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
     };
 
     const taxBreakdown = calculateTaxBreakdown(netTaxableIncome);
+    // deductions NOW includes Employer PF.
     const totalDeductions = deductions.reduce((sum, d) => sum + d.amount, 0) + totalTax;
-    const netPay = grossSalary - totalDeductions;
+
+    // Net Pay Logic:
+    // Fixed Gross DOES NOT include Employer PF.
+    // Fixed Gross DOES NOT include Bonus (if separate).
+    // Total Deductions INCLUDES Employer PF.
+    // So logically: Net Pay = (Fixed Gross + Bonus) - (Total Deductions - Employer PF).
+    // OR simpler: Net Pay = CTC - Total Deductions.
+    // (Since CTC = Fixed Gross + Bonus + Employer PF).
+    // Let's use CTC - Total Deductions for consistency, assuming Total Deductions capture all outflows.
+
+    const netPay = ctc - totalDeductions;
 
     return (
         <div className="modal-overlay" onClick={onClose}>
@@ -107,8 +118,10 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
                                             </td>
                                         </tr>
                                     ))}
+
+                                    {/* Fixed Salary Subtotal */}
                                     <tr style={{ fontWeight: '600', background: 'rgba(52, 199, 89, 0.1)' }}>
-                                        <td data-label="Component" style={{ padding: '0.75rem' }}>Gross Salary</td>
+                                        <td data-label="Component" style={{ padding: '0.75rem' }}>Gross Salary (Fixed)</td>
                                         <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right' }}>
                                             ₹ {formatIndianNumber(Math.round(grossSalary))}
                                         </td>
@@ -116,6 +129,19 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
                                             {((grossSalary / ctc) * 100).toFixed(1)}%
                                         </td>
                                     </tr>
+
+                                    {/* Performance Bonus if Exists */}
+                                    {performanceBonus > 0 && (
+                                        <tr style={{ fontWeight: '600', color: 'var(--accent-color)', background: 'rgba(255, 215, 0, 0.05)', borderTop: '2px solid #fff' }}>
+                                            <td data-label="Component" style={{ padding: '0.75rem' }}>+ Performance Bonus</td>
+                                            <td data-label="Amount" style={{ padding: '0.75rem', textAlign: 'right' }}>
+                                                ₹ {formatIndianNumber(Math.round(performanceBonus))}
+                                            </td>
+                                            <td data-label="% of CTC" style={{ padding: '0.75rem', textAlign: 'right' }}>
+                                                {((performanceBonus / ctc) * 100).toFixed(1)}%
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -262,8 +288,8 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
                     </h3>
                     <div className="summary-grid" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <div className="summary-item">
-                            <span className="summary-label">Gross Salary</span>
-                            <span className="summary-value">₹ {formatIndianNumber(Math.round(grossSalary))}</span>
+                            <span className="summary-label">Total Cost to Company (CTC)</span>
+                            <span className="summary-value">₹ {formatIndianNumber(Math.round(ctc))}</span>
                         </div>
                         <div className="summary-item">
                             <span className="summary-label">Total Deductions</span>
@@ -288,6 +314,8 @@ const CalculationModal = ({ isOpen, onClose, salaryDetails, taxCalculation, ctc,
                             textAlign: 'left'
                         }}>
                             ({viewMode === 'monthly' ? `₹ ${formatIndianNumber(Math.round(netPay / 12))}/month` : 'Annual'})
+                            <br />
+                            <span style={{ fontSize: '0.8rem', fontStyle: 'italic', color: 'var(--text-secondary)' }}>Note: Includes Performance Bonus if any.</span>
                         </div>
                     </div>
                 </div>
